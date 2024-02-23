@@ -6,6 +6,7 @@
   "bin": {
     "rezip-electron": "./bin/rezip-electron.js"
   },
+  "main": "lib/index.js",
   "files": [
     "bin/rezip-electron.js",
     "lib"
@@ -15,7 +16,7 @@
     "lint": "npm run check:eslint && npm run check:format",
     "check:eslint": "eslint --cache .",
     "check:format": "prettier --cache --check .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava"
   },
   "keywords": [
     "electron",
@@ -42,6 +43,7 @@
     "yauzl": "^3.1.0"
   },
   "devDependencies": {
+    "ava": "^6.1.1",
     "eslint": "^8.56.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^9.1.0",
