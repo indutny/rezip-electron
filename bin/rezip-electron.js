@@ -15,9 +15,10 @@ program
   .command('optimize')
   .argument('<input>', 'input .zip file')
   .requiredOption('-o, --output <output>', 'output .zip file')
+  .option('--blockmap <blockmap>', 'output .blockmap file')
   .summary('Optimize a .zip file')
-  .action(async (input, { output }) => {
-    await optimize(input, output);
+  .action(async (inputPath, { output: outputPath, blockmap: blockMapPath }) => {
+    await optimize({ inputPath, outputPath, blockMapPath });
   });
 
 function formatSize(size) {

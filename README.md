@@ -46,7 +46,7 @@ Before optimization:
 $ rezip-electron compare signal-desktop-mac-arm64-6.48.0.zip \
     signal-desktop-mac-arm64-6.48.1.zip
 # ...A lot of changed files...
-Total Download Size: 10.22mb
+Total Download Size: 10.00mb
 ```
 
 After optimization:
@@ -55,7 +55,7 @@ After optimization:
 $ rezip-electron compare signal-desktop-mac-arm64-6.48.0.opt.zip \
     signal-desktop-mac-arm64-6.48.1.opt.zip
 # ...Way less changed files...
-Total Download Size: 3.15mb
+Total Download Size: 2.86mb
 ```
 
 ## LICENSE
