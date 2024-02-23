@@ -7,6 +7,7 @@
     "rezip-electron": "./bin/rezip-electron.js"
   },
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
     "bin/rezip-electron.js",
     "lib"
