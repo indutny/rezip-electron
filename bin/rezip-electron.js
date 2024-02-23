@@ -14,7 +14,7 @@ program
 program
   .command('optimize')
   .argument('<input>', 'input .zip file')
-  .option('-o, --output <output>', 'output .zip file')
+  .requiredOption('-o, --output <output>', 'output .zip file')
   .summary('Optimize a .zip file')
   .action(async (input, { output }) => {
     await optimize(input, output);
