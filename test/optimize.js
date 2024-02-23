@@ -11,7 +11,7 @@ import test from 'ava';
 import yauzl from 'yauzl';
 
 import { optimize } from '../lib/index.js';
-import streamToBuffer from '../lib/util.js';
+import { streamToBuffer } from '../lib/util.js';
 
 async function parseZipFile(path) {
   const zip = await promisify(yauzl.open)(path, {
