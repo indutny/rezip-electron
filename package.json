@@ -1,6 +1,6 @@
 {
   "name": "@indutny/rezip-electron",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Re-compress Electron macOS installer zip files for better incremental updates",
   "type": "module",
   "bin": {
