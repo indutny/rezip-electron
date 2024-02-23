@@ -2,9 +2,8 @@ import { URL } from 'node:url';
 import { promisify } from 'node:util';
 import { once } from 'node:events';
 import { createHash } from 'node:crypto';
-import { readFile, stat } from 'node:fs/promises';
+import { stat } from 'node:fs/promises';
 import { createWriteStream } from 'node:fs';
-import { gunzipSync } from 'node:zlib';
 import { pipeline } from 'node:stream/promises';
 // eslint-disable-next-line import/no-unresolved
 import test from 'ava';
@@ -61,14 +60,9 @@ async function parseZipFile(path) {
 test('it preserves contents of zip file', async (t) => {
   const inputPath = new URL('./fixtures/a.zip', import.meta.url);
   const outputPath = new URL('./fixtures/a.zip.tmp', import.meta.url);
-  const blockMapPath = new URL('./fixtures/a.blockmap.tmp', import.meta.url);
 
-  await optimize({ inputPath, outputPath, blockMapPath });
+  await optimize({ inputPath, outputPath });
   t.deepEqual(await parseZipFile(outputPath), await parseZipFile(inputPath));
-
-  const blockMapData = await readFile(blockMapPath);
-  const blockMap = JSON.parse(gunzipSync(blockMapData, 'utf8'));
-  t.snapshot(blockMap, 'blockmap');
 });
 
 test('it preserves contents of fiddle installer', async (t) => {
@@ -90,15 +84,7 @@ test('it preserves contents of fiddle installer', async (t) => {
   }
 
   const outputPath = new URL('./fixtures/fiddle.opt.tmp', import.meta.url);
-  const blockMapPath = new URL(
-    './fixtures/fiddle.blockmap.tmp',
-    import.meta.url,
-  );
 
-  await optimize({ inputPath, outputPath, blockMapPath });
+  await optimize({ inputPath, outputPath });
   t.deepEqual(await parseZipFile(outputPath), await parseZipFile(inputPath));
-
-  const blockMapData = await readFile(blockMapPath);
-  const blockMap = JSON.parse(gunzipSync(blockMapData, 'utf8'));
-  t.snapshot(blockMap, 'blockmap');
 });
