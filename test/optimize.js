@@ -27,8 +27,7 @@ async function parseZipFile(path) {
       const file = {
         fileName,
         uncompressedSize,
-        // eslint-disable-next-line no-bitwise
-        mode: externalFileAttributes >>> 16,
+        externalFileAttributes,
       };
 
       if (entry.fileName.endsWith('/')) {
@@ -71,5 +70,5 @@ test('it preserves contents of zip file', async (t) => {
 
   const blockMapData = await readFile(blockMapPath);
   const blockMap = JSON.parse(gunzipSync(blockMapData, 'utf8'));
-  t.snapshot(blockMap);
+  t.snapshot(blockMap, 'blockmap');
 });
