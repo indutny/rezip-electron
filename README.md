@@ -9,10 +9,10 @@ the updates are:
 - a compressed zip file with the app
 - a blockmap file
 
-Where blockmap file is leveraged for effective differential downloads, or in
+Where blockmap file is leveraged for effective incremental downloads, or in
 other words downloading only the updated parts of the new version of the app.
 
-While using differential downloads reduces download size dramatically it behaves
+While using incremental downloads reduces download size dramatically it behaves
 unoptimally with regards to the [asar](https://github.com/electron/asar) package
 that contains most app's source files. The reason for this is that in a zip
 archive all files are compressed individually, but after compression each file

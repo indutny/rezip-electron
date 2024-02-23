@@ -8,7 +8,7 @@ program
   .name('rezip-electron')
   .description(
     'Re-compress Electron macOS installer zip files ' +
-      'for better differential updates',
+      'for better incremental updates',
   );
 
 program
