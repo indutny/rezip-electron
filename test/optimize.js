@@ -11,6 +11,7 @@ import test from 'ava';
 import yauzl from 'yauzl';
 
 import { optimize } from '../lib/index.js';
+import streamToBuffer from '../lib/util.js';
 
 async function parseZipFile(path) {
   const zip = await promisify(yauzl.open)(path, {
@@ -37,14 +38,9 @@ async function parseZipFile(path) {
       }
 
       const stream = await openReadStream(entry);
+      const content = await streamToBuffer(stream);
 
-      const chunks = [];
-      stream.on('data', (chunk) => chunks.push(chunk));
-      await once(stream, 'end');
-
-      file.content = createHash('sha256')
-        .update(Buffer.concat(chunks))
-        .digest('hex');
+      file.content = createHash('sha256').update(content).digest('hex');
       return file;
     }),
   );
