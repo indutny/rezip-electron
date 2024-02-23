@@ -2,8 +2,10 @@ import { URL } from 'node:url';
 import { promisify } from 'node:util';
 import { once } from 'node:events';
 import { createHash } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
+import { readFile, stat } from 'node:fs/promises';
+import { createWriteStream } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
+import { pipeline } from 'node:stream/promises';
 // eslint-disable-next-line import/no-unresolved
 import test from 'ava';
 import yauzl from 'yauzl';
@@ -64,6 +66,38 @@ test('it preserves contents of zip file', async (t) => {
   const inputPath = new URL('./fixtures/a.zip', import.meta.url);
   const outputPath = new URL('./fixtures/a.zip.tmp', import.meta.url);
   const blockMapPath = new URL('./fixtures/a.blockmap.tmp', import.meta.url);
+
+  await optimize({ inputPath, outputPath, blockMapPath });
+  t.deepEqual(await parseZipFile(outputPath), await parseZipFile(inputPath));
+
+  const blockMapData = await readFile(blockMapPath);
+  const blockMap = JSON.parse(gunzipSync(blockMapData, 'utf8'));
+  t.snapshot(blockMap, 'blockmap');
+});
+
+test('it preserves contents of fiddle installer', async (t) => {
+  const inputPath = new URL('./fixtures/fiddle.zip.tmp', import.meta.url);
+  try {
+    await stat(inputPath);
+  } catch {
+    // eslint-disable-next-line no-console
+    console.log('Downloading fiddle');
+    const res = await fetch(
+      'https://github.com/electron/fiddle/releases/download/v0.36.0/' +
+        'Electron-Fiddle-darwin-arm64-0.36.0.zip',
+    );
+    if (!res.ok) {
+      throw new Error('Failed to download');
+    }
+
+    await pipeline(res.body, createWriteStream(inputPath));
+  }
+
+  const outputPath = new URL('./fixtures/fiddle.opt.tmp', import.meta.url);
+  const blockMapPath = new URL(
+    './fixtures/fiddle.blockmap.tmp',
+    import.meta.url,
+  );
 
   await optimize({ inputPath, outputPath, blockMapPath });
   t.deepEqual(await parseZipFile(outputPath), await parseZipFile(inputPath));
