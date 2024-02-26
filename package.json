@@ -37,7 +37,7 @@
   },
   "homepage": "https://github.com/indutny/rezip-electron#readme",
   "dependencies": {
-    "@indutny/inflate": "^1.0.3",
+    "@indutny/inflate": "^1.0.4",
     "@indutny/yazl": "^2.7.0",
     "better-blockmap": "^1.0.2",
     "commander": "^12.0.0",
