@@ -13,8 +13,6 @@ export function compare(
     resolvedPath: string;
     originalPath: string;
     subPath?: string;
-    resolvedOffset: number;
-    fileOffset: number;
     zipOffset: number;
     size: number;
   }>;

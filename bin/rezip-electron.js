@@ -50,10 +50,8 @@ program
     const { downloadSize, modifiedFiles } = raw;
 
     console.log('File List:');
-    for (const { resolvedPath, resolvedOffset, size } of modifiedFiles) {
-      console.log(
-        `  ${resolvedPath} at ${resolvedOffset}: ${formatSize(size)}`,
-      );
+    for (const { resolvedPath, size } of modifiedFiles) {
+      console.log(`  ${resolvedPath}: ${formatSize(size)}`);
     }
     console.log('');
     console.log('Total Download Size:', formatSize(downloadSize));
